@@ -1,0 +1,55 @@
+#pomodoro {
+    width: 60%;
+    margin: auto;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+#pomodoro h1, #pomodoro h2 {
+    margin: 0;
+}
+
+#pomodoro h1 {
+    font-size: 3rem;
+}
+
+#pomodoro h2 {
+    font-size: 2.5rem;
+}
+
+#pomodoro .settings  {
+    width: 100%;
+    margin-top: 2rem;
+}
+
+#pomodoro .settings .buttons {
+    width: 60%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+#pomodoro .settings .buttons button {
+    flex: 1;
+}
+
+#pomodoro .settings .select {
+    width: 60%;
+    margin: auto;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+#pomodoro .settings .select label {
+    flex: 1;
+}
+
+#pomodoro .settings .select select {
+    flex: 2;
+}
