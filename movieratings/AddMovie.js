@@ -1,17 +1,21 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { AsyncStorage } from '@react-native-community/async-storage';
+
 
 export default class AddMovie extends React.Component {
+    IMDB = "https://www.imdb.com/title/";
+    
     constructor(props) {
-      super(props);
-      this.state = {
-          name: '',
-          summary: '',
-          rating: '',
-          link: '',
-          valid: false
-      }
+        super(props);
+        this.state = {
+            name: '',
+            summary: '',
+            rating: '',
+            link: '',
+            valid: false
+        }
     }
 
     checkName = (name) => {
@@ -35,10 +39,22 @@ export default class AddMovie extends React.Component {
     }
     
     validateForm = () => {
-        if (this.state.rating.length == 1 && this.state.name.length >= 5 && this.state.link.length >= 10 && this.state.summary.length >= 5)
+        if (this.state.rating.length == 1 && this.state.name.length >= 5 && this.state.link.startsWith(this.IMDB) && this.state.summary.length >= 5)
             this.setState({valid: true})
         else {
             this.setState({valid: false})
+        }
+    }
+
+    addMovie = async () => {
+        if(this.state.valid) {
+            try {
+                let value = await AsyncStorage.getItem('movies');
+                value[value.length-1] = {};
+                await AsyncStorage.setItem('movies', JSON.stringify(value));
+            } catch (error) {
+                console.log("Error saving data");
+            }
         }
     }
 
@@ -66,7 +82,7 @@ export default class AddMovie extends React.Component {
                         onChangeText = {this.checkLink}/>
                 </View>
                 
-                <Button title="Add" disabled={!this.state.valid}/>
+                <Button title="Add" onPress={this.addMovie} disabled={!this.state.valid}/>
             </View>
         );
     }
