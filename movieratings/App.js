@@ -1,50 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
-import MovieList from './MovieList';
-import AddMovie from './AddMovie';
+import MovieList from './src/views/MovieList';
+import AddMovie from './src/views/AddMovie';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from '@react-navigation/native';
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showForm: false
-    }
-  }
+const Stack = createNativeStackNavigator();
 
-  toggleShow = () => {
-    this.setState(prevState => ({showForm: !prevState.showForm}));
-  }
+export default function App () {
 
-  render() {
-    if (this.state.showForm)
-    {
-      return (
-        <View style={styles.container}>
-          <MovieList />
-          <TouchableOpacity
-            onPress={this.toggleShow}
-            style={styles.roundButton}>
-            <Text style={{color: 'white', fontWeight: '600', fontSize: 30}}>+</Text>
-          </TouchableOpacity>
-          <StatusBar style="auto" />
-        </View>
-      );
-    } else {
-      return (
-        <View style={styles.container}>
-          <AddMovie />
-          <TouchableOpacity
-            onPress={this.toggleShow}
-            style={styles.bottomButton}>
-            <Text style={{color: 'white', fontWeight: '600', fontSize: 30}}>Return</Text>
-          </TouchableOpacity>
-          <StatusBar style="auto" />
-        </View>
-      );
-    }
-    
-  }
+  return (
+    <NavigationContainer>
+      <Stack.Navigator >
+        <Stack.Screen
+          name = "MovieList"
+          component={MovieList}
+          initialParams={{newMovie: null}}
+        />
+        <Stack.Screen
+          name = "AddMovie"
+          component={AddMovie}
+        />
+      </Stack.Navigator>
+      <StatusBar style="auto" />
+    </NavigationContainer>
+  );
 }
 
 const styles = StyleSheet.create({
