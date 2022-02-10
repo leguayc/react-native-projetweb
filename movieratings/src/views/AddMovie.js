@@ -57,7 +57,7 @@ export default function AddMovie () {
         let ratingValid = (rating.length == 1);
         setIsRatingValid(ratingValid);
 
-        let imageUrlValid = ( imageUrl.endsWith('.png') || imageUrl.endsWith('.jpg'));
+        let imageUrlValid = ( (imageUrl.startsWith('https://') || imageUrl.startsWith('http://')) && (imageUrl.endsWith('.png') || imageUrl.endsWith('.jpg')));
         setIsImageUrlValid(imageUrlValid);
 
         let linkValid = (link.startsWith(IMDB));
