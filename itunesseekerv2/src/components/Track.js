@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, Button, Linking, ToastAndroid, TextInput, TouchableOpacity } from 'react-native';
 import {useNavigation, useRoute} from "@react-navigation/native";
-import { getData, storeData, SavedTracksKey } from '../../AsyncStorageHelper';
+import store, {addTrack} from '../store/TracksStore';
 
 export default function Track () {
     const navigation = useNavigation();
@@ -37,17 +37,8 @@ export default function Track () {
                 rating: rating
             };
 
-            let data = await getData(SavedTracksKey);
-
-            if (data == null) {
-                data = { allTracks : [] };
-            }
-
-            data.allTracks.push(item);
-
-            if (await storeData(SavedTracksKey, data)) {
-                navigation.navigate('SavedTrackList', {hasSavedNewTrack: true});
-            }
+            store.dispatch(addTrack(item));
+            navigation.navigate('SearchItunes');
         }
     };
     
@@ -73,18 +64,15 @@ export function TrackPreview ({track, rating, isRated}) {
         if (isRated) {
             navigation.navigate('Track', {track: track, rating: rating, isRated: isRated});
         } else {
-            let savedTracks = await getData(SavedTracksKey);
+            let savedTracks = store.getState().tracks;
             let _rating = '';
             let _isRated = false;
 
             if (savedTracks) {
-                let allTracks = savedTracks.allTracks;
-                
-                
-                for(let i=0; i < allTracks.length; i++) {
-                    if (allTracks[i].track.trackId == track.trackId) {
+                for(let i=0; i < savedTracks.length; i++) {
+                    if (savedTracks[i].track.trackId == track.trackId) {
                         _isRated = true;
-                        _rating = allTracks[i].rating;
+                        _rating = savedTracks[i].rating;
                     }
                 }
             }

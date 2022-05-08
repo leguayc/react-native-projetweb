@@ -3,11 +3,12 @@ import { StyleSheet, View, ScrollView, Button, TextInput } from 'react-native';
 import {useNavigation} from "@react-navigation/native";
 import { TrackPreview } from '../components/Track';
 import axios from 'axios';
+import store, {setCurrentSearch} from '../store/TracksStore';
 
 export default function SearchItunes() {
     const navigation = useNavigation();
 
-    const [search, setSearch] = useState('');
+    const [search, setSearch] = useState(store.getState().currentSearch);
     const [results, setResults] = useState([]);
     
     const searchItunes = () => {
@@ -15,6 +16,7 @@ export default function SearchItunes() {
         axios(apiUrl).then(({ data }) => {
             console.log(data.results);
             setResults(data.results);
+            store.dispatch(setCurrentSearch(search));
         })
     };
 
