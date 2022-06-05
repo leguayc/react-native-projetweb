@@ -4,7 +4,11 @@ export const stopAllAudio = () => {
     audios.forEach(audio => {
         if (audio)
         {
-            audio.pause();
+            audio.audio.pause();
+            if (audio.onEnd)
+            {
+                audio.onEnd();
+            }
             audio = undefined;
         }
     });
@@ -12,23 +16,22 @@ export const stopAllAudio = () => {
     audios = [];
 };
 
-export const playAudio = (id, url) => {
-    console.log('test');
-
+export const playAudio = (id, url, callBack) => {
     if (audios[id])
     {
-        console.log('test2');
-        audios[id].pause();
+        audios[id].audio.pause();
         audios[id] = undefined;
     }
 
-    audios[id] = new Audio(url);
+    audios[id] = { audio : new Audio(url), onEnd: callBack };
     
-    audios[id].onended = () => {
-        console.log('test4');
+    audios[id].audio.onended = () => {
+        if (audios[id].onEnd)
+        {
+            audios[id].onEnd();
+        }
         audios[id] = undefined;
     }
     
-    audios[id].play();
-    console.log('test3');
+    audios[id].audio.play();
 }

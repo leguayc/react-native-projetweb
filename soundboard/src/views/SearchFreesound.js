@@ -1,13 +1,13 @@
 import { Button, ScrollView, StyleSheet, TextInput, View } from 'react-native';
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import { APIKey } from '../../App';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import store, {setSample} from '../store/SampleBoardStore';
 import Sample from '../components/Sample';
+import { stopAllAudio } from '../helpers/AudioHelper';
 
 export default function SearchFreesound() {
-    const navigation = useNavigation();
     const route = useRoute();
     const [search, setSearch] = useState('');
     const [results, setResults] = useState([]);
@@ -15,7 +15,7 @@ export default function SearchFreesound() {
     const callBack = route.params.callBack;
 
     const searchAPI = () => {
-        const apiUrl = "https://freesound.org/apiv2/search/text/?token=" + APIKey + "&fields=id,name,description,previews&query=" + search;
+        const apiUrl = "https://freesound.org/apiv2/search/text/?token=" + APIKey + "&fields=id,name,description,previews,duration&query=" + search;
         
         axios(apiUrl).then(({ data }) => {
             setResults(data.results);
@@ -31,6 +31,12 @@ export default function SearchFreesound() {
     const onInputFreesoundChange = (e) => {
         setSearch(e.target.value);
     }
+
+    useEffect(() => {
+        return () => {
+            stopAllAudio();
+        }
+    }, []);
 
     return (
         <View style={styles.container}>

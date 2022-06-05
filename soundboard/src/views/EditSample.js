@@ -1,16 +1,23 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Sample from '../components/Sample';
+import { stopAllAudio } from '../helpers/AudioHelper';
 
 export default function EditSample() {
     const route = useRoute();
     const navigation = useNavigation();
     const [element, setElement] = useState(route.params.buttonSample);
 
+    useEffect(() => {
+        return () => {
+            stopAllAudio();
+        }
+    }, []);
+
     const searchFreesound = () => {
         navigation.navigate('SearchFreesound', {buttonSample: element, callBack: setElement});
-    }
+    };
 
     return (
         <View style={styles.container}>

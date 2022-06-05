@@ -3,9 +3,14 @@ import { playAudio } from "../helpers/AudioHelper";
 
 const MAX_DESCRIPTION_LENGTH = 150;
 
-export default function Sample({sample, selectCallback, ...props}) {
+export default function Sample({sample, selectCallback, onPlay, onStop, ...props}) {
     const play = () => {
         playAudio(10, sample.previews["preview-hq-mp3"]);
+        
+        if (onPlay)
+        {
+            onPlay();
+        }
     };
 
     return (
