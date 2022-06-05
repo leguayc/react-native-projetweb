@@ -19,6 +19,9 @@ export default function Sample({sample, selectCallback, onPlay, onStop, ...props
                 <View style={styles.container}>
                     <Text>Title : {sample.name}</Text>
                     <Text>Description : {sample.description.length < MAX_DESCRIPTION_LENGTH ? sample.description : sample.description.substring(0, MAX_DESCRIPTION_LENGTH) + '...'}</Text>
+                    {sample.origin &&
+                        <Text>Origin : {sample.origin}</Text>
+                    }
                     <Button title="Play" onPress={play}/>
                     {selectCallback &&
                         <Button title="Select" onPress={selectCallback}/>

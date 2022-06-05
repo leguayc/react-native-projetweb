@@ -1,4 +1,4 @@
-import { createSlice, configureStore } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const defaultSampler = [
     {id: 0, bgColor: '#6495ed'},
@@ -12,9 +12,8 @@ const defaultSampler = [
     {id: 8, bgColor: '#ff69b4'},
 ];
 
-
-const sampleBoardSlice = createSlice({
-    name: 'sampleBoard',
+const presetsSlice = createSlice({
+    name: 'presets',
     initialState: {
         presets : [
             defaultSampler
@@ -49,9 +48,5 @@ const sampleBoardSlice = createSlice({
     }
 });
 
-const store = configureStore({
-    reducer: sampleBoardSlice.reducer
-});
-
-export default store;
-export const { setSample, setCurrentPreset, addPreset, removePreset } = sampleBoardSlice.actions
+export const PresetsReducer = presetsSlice.reducer;
+export const { setSample, setCurrentPreset, addPreset, removePreset } = presetsSlice.actions

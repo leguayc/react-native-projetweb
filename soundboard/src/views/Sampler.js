@@ -2,18 +2,20 @@ import { useState } from 'react';
 import { StyleSheet, View, Button, Picker } from 'react-native';
 import ButtonSample from '../components/ButtonSample';
 import { stopAllAudio } from '../helpers/AudioHelper';
-import store, { setCurrentPreset, addPreset, removePreset } from '../store/SampleBoardStore';
+import { setCurrentPreset, addPreset, removePreset } from '../store/PresetsSlice';
+import store from '../store/Store';
 
 export default function Sampler() {
-    const [presets, setPresets] = useState(store.getState().presets);
-    const [presetIndex, setPresetIndex] = useState(store.getState().currentPreset);
-    const [soundpad, setSoundpad] = useState(store.getState().presets[store.getState().currentPreset]);
+    const presetsSlice = store.getState().presets; // Only used for default values
+    const [presets, setPresets] = useState(presetsSlice.presets);
+    const [presetIndex, setPresetIndex] = useState(presetsSlice.currentPreset);
+    const [soundpad, setSoundpad] = useState(presetsSlice.presets[presetsSlice.currentPreset]);
 
     store.subscribe(() => {
-        let storeState = store.getState();
-        setPresetIndex(storeState.currentPreset);
-        setPresets([... storeState.presets]);
-        setSoundpad([... storeState.presets[storeState.currentPreset]]);
+        let presetsState = store.getState().presets;
+        setPresetIndex(presetsState.currentPreset);
+        setPresets([... presetsState.presets]);
+        setSoundpad([... presetsState.presets[presetsState.currentPreset]]);
     });
 
     const changePreset = (value) => {

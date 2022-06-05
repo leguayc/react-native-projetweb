@@ -14,7 +14,7 @@ export default function ButtonSample({id, bgColor, sample, ...props}) {
         margin: 5,
         backgroundColor: bgColor && sample ? bgColor : "#fff",
         borderWidth: isPlaying ? 2 : 0,
-        borderColor: "red"
+        borderColor: "#000"
     };
 
     const onPressIn = () => {

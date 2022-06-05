@@ -15,15 +15,16 @@ export default function EditSample() {
         }
     }, []);
 
-    const searchFreesound = () => {
-        navigation.navigate('SearchFreesound', {buttonSample: element, callBack: setElement});
+    const navigateToSearch = (routeName) => {
+        navigation.navigate(routeName, {buttonSample: element, callBack: setElement});
     };
 
     return (
         <View style={styles.container}>
             <Text>Current sound : </Text>
             <Sample sample={element.sample} />
-            <Button title="Search Freesound" onPress={searchFreesound} />
+            <Button title="Search Saved Sounds" onPress={() => {navigateToSearch('SearchSavedSound')}} />
+            <Button title="Search Freesound" onPress={() => {navigateToSearch('SearchFreesound')}} />
         </View>
     );
 }
