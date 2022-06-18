@@ -19,6 +19,7 @@ export default function ButtonSample({id, bgColor, sample, ...props}) {
 
     const onPressIn = () => {
         timerId = setTimeout(() => {
+            // If we press for more than 300ms, we go in edit view.
             timerId = null;
             
             let item = {id: id, sample: sample};
@@ -27,6 +28,7 @@ export default function ButtonSample({id, bgColor, sample, ...props}) {
     };
 
     const onPressOut = () => {
+        // If we press out before the 300ms timer is finished, we play audio (if there is registered audio on this button)
         if (timerId != null)
         {
             clearTimeout(timerId);

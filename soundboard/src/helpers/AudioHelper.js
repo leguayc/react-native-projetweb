@@ -1,3 +1,4 @@
+// This contains all played sounds
 let audios = [];
 
 export const stopAllAudio = () => {
@@ -16,6 +17,7 @@ export const stopAllAudio = () => {
     audios = [];
 };
 
+// The id is the audio channel, we can only play one sound on one channel.
 export const playAudio = (id, url, callBack) => {
     if (audios[id])
     {

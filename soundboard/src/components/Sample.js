@@ -5,6 +5,7 @@ const MAX_DESCRIPTION_LENGTH = 150;
 
 export default function Sample({sample, selectCallback, onPlay, onStop, ...props}) {
     const play = () => {
+        // We play this sounds on channel 10 because it's unused by the soundboard (channel from 0 to 9)
         playAudio(10, sample.previews["preview-hq-mp3"]);
         
         if (onPlay)
